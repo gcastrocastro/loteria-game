@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Ultra&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    /* height: 100vh; */
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: darkcyan;
+}
+
+h1 {
+    font-size: 8vmin;
+    color: white;
+    font-family: 'Ultra', serif;
+
+}
+
+#random-card{
+    height: 40vmin;
+    width: auto;
+}
