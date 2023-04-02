@@ -6,14 +6,10 @@
 
 body {
     height: 100vh;
-    width: 100vw;
     margin: 0;
     text-align: center;
-    /* display: flex;
-    flex-direction: column; */
-    /* justify-content: center;
-    align-items: center; */
-    background-color: darkcyan;
+    background: rgb(242,235,91);
+    background: radial-gradient(circle, rgba(242,235,91,1) 0%, rgba(249,73,73,1) 100%);
 }
 
 h1 {
@@ -27,13 +23,12 @@ h1 {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    align-content: stretch;
 }
 
 #tabla {
     display: grid;
-    grid-template-columns: repeat(4, 10vmin);
-    grid-template-rows: repeat(4, 15vmin);
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: repeat(4, 25%);
     grid-gap: 0;
 }
 
@@ -43,10 +38,30 @@ h1 {
 }
 
 #random-card{
-    height: 30vmin;
-    width: auto;
+    height: 40vmin;
 }
 
-section img {
-    height: 15vmin;
+#reset-btn{
+    background-color: transparent;
+    color: rgba(249,73,73,1);
+    border: 1px solid rgba(249,73,73,1);
+    margin-top: 50px;
+    border-radius: 4vmin;
+    font-size: 20px;
+    font-family: 'Ultra';
+    padding: 2vmin;
+    cursor: pointer;
+    transform: scale(.8);
+}
+
+#reset-btn:hover{
+    background-color: rgba(249,73,73,1);
+    color: rgb(242,235,91);
+    transform: scale(.9);
+    transition: all .25s ease-in;
+}
+
+#tabla img {
+    height: 18vmin;
+    cursor: pointer;
 }
