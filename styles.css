@@ -26,6 +26,7 @@ h1 {
 }
 
 #tabla {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(4, 25%);
     grid-template-rows: repeat(4, 25%);
@@ -64,4 +65,16 @@ h1 {
 #tabla img {
     height: 18vmin;
     cursor: pointer;
+}
+
+#c0r1 {
+    z-index:0;
+}
+
+.bean_overlay{
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 1;
+    opacity: 1;
 }
