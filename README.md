@@ -23,7 +23,8 @@ A simplified version of the classic Mexican card game 'Loteria'. The game consis
     -- render two randomly generated tablas (4x4) on either side of the middle card
   4.3) Wait for the user to click play
     -- when clicked, the middle square will change to a randomly generated card and the player will have 5 sec to identify it on their tabla
-    -- if they don't identify the card, ????
+    -- if they don't identify the card, the player will not be notified, resulting in the computer winning.
+    -- if they do identify every card, winning is still up to chance depending on the randomization of both the tablas and the cards being drawn.
 
 5) Handle a player clicking a square
     -- if the card is present on the tabla, the player needs to click on the card
