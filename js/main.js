@@ -74,6 +74,7 @@
 
   /*----- event listeners -----*/
    tablaCards.forEach(card => card.addEventListener('click', handleClick));
+   playBtn.addEventListener('click', deckCountdown);
 
   /*----- functions -----*/
 
@@ -121,4 +122,12 @@
     const [col, row] = target.id.split(",");
     board[col][row] = 1;
     target.src = bean.image;
+  }
+
+  function deckCountdown(){
+    selected = [];
+    setInterval(function() {
+      middleCard.src = randomizeCard();
+      console.log(selected);
+    }, 5000); 
   }
