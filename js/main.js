@@ -66,11 +66,14 @@
   let winner;
 
   /*----- cached elements  -----*/
-  const [...tablaCards] = document.querySelectorAll('#tabla img');
+  const middleCard = document.getElementById('random-card');
+  const playBtn = document.getElementById('reset-btn');
+  // console.log(middleCard, playBtn);
+  const nodeList = document.querySelectorAll('#tabla > img');
+  const tablaCards = [...nodeList];
 
   /*----- event listeners -----*/
-  tablaCards.forEach(card => card.addEventListener('click', handleClick));
-
+   tablaCards.forEach(card => card.addEventListener('click', handleClick));
 
   /*----- functions -----*/
 
@@ -80,16 +83,16 @@
       selected = [];
       winner = null;
       board = [
-        [0, 0, 0, 1],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
-        [1, 0, 0, 0]
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
       ];
       render();
   }
 
   function render() {
-      renderBoard();
+      randomizeBoard();
   }
 
   function randomizeCard() {
@@ -97,27 +100,25 @@
     const found = selected.find(selectedItem => selectedItem === randomIndex);
     if (!found){
       selected.push(randomIndex);
-      // console.log(selected);
       return deck[randomIndex].image;
     } else {
       return randomizeCard();
     }
   }
 
-  function renderBoard(){
+  function randomizeBoard(){
     board.forEach((rowArray, arrayIdx) => {
         rowArray.forEach((rowValue, rowIdx) => {
-            const cardId = `c${arrayIdx}r${rowIdx}`;
+            const cardId = `${arrayIdx},${rowIdx}`;
             const cardEl = document.getElementById(cardId);
             cardEl.src = randomizeCard();
-            if (rowValue === 1) {
-              cardEl.src = bean.image;
-            }
         })
     })
   }
 
   function handleClick(e){
-    const rowIdx = [...tablaCards].indexOf(e.target);
-    console.log(rowIdx);
+    const target = e.target;
+    const [col, row] = target.id.split(",");
+    board[col][row] = 1;
+    target.src = bean.image;
   }
