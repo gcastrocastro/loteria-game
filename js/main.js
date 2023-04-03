@@ -1,5 +1,3 @@
-  console.log('sanity check');
-  
   /*----- constants -----*/
   const deck = [
     { 1: 'el-gallo', image: 'img/1-el-gallo.png'},
@@ -68,9 +66,10 @@
   let winner;
 
   /*----- cached elements  -----*/
-
+  const [...tablaCards] = document.querySelectorAll('#tabla img');
 
   /*----- event listeners -----*/
+  tablaCards.forEach(card => card.addEventListener('click', handleClick));
 
 
   /*----- functions -----*/
@@ -98,15 +97,14 @@
     const found = selected.find(selectedItem => selectedItem === randomIndex);
     if (!found){
       selected.push(randomIndex);
-      console.log(selected);
+      // console.log(selected);
       return deck[randomIndex].image;
     } else {
-      randomizeCard();
+      return randomizeCard();
     }
   }
 
   function renderBoard(){
-
     board.forEach((rowArray, arrayIdx) => {
         rowArray.forEach((rowValue, rowIdx) => {
             const cardId = `c${arrayIdx}r${rowIdx}`;
@@ -117,4 +115,9 @@
             }
         })
     })
+  }
+
+  function handleClick(e){
+    const rowIdx = [...tablaCards].indexOf(e.target);
+    console.log(rowIdx);
   }
