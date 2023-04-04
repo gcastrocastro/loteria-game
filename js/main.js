@@ -67,6 +67,7 @@
 
   /*----- cached elements  -----*/
   const middleCard = document.getElementById('random-card');
+  const middleContainer = document.getElementById('middle-container');
   const playBtn = document.getElementById('reset-btn');
   const nodeList = document.querySelectorAll('#tabla > img');
   const tablaCards = [...nodeList];
@@ -116,6 +117,7 @@
     const [col, row] = target.id.split(",");
     board[col][row] = 1;
     target.src = bean.image;
+    checkWinner();
   }
 
   function deckCountdown(){
@@ -127,4 +129,23 @@
         console.log(selected);
       }, 5000); 
     //  
+  }
+
+  function checkWinner() {
+    board.forEach(rowArray => {
+      let sum = 0;
+      rowArray.forEach(value => {
+        sum += value;
+      })
+      if (sum === 4) {
+        winner = 'player';
+        renderMessage();
+      }
+    })
+  }
+
+  function renderMessage() {
+    const winnerMessage = document.createElement('h2');
+    winnerMessage.innerHTML =`<h4>The ${winner} has won! <br> Congratulations!</h4>`;
+    middleContainer.prepend(winnerMessage);
   }
