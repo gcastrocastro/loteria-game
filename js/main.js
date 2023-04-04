@@ -68,7 +68,6 @@
   /*----- cached elements  -----*/
   const middleCard = document.getElementById('random-card');
   const playBtn = document.getElementById('reset-btn');
-  // console.log(middleCard, playBtn);
   const nodeList = document.querySelectorAll('#tabla > img');
   const tablaCards = [...nodeList];
 
@@ -89,11 +88,6 @@
         [0, 0, 0, 0],
         [0, 0, 0, 0]
       ];
-      render();
-  }
-
-  function render() {
-      randomizeBoard();
   }
 
   function randomizeCard() {
@@ -125,9 +119,12 @@
   }
 
   function deckCountdown(){
+    randomizeBoard();
     selected = [];
-    setInterval(function() {
-      middleCard.src = randomizeCard();
-      console.log(selected);
-    }, 5000); 
+    //  while (selected.length <= 54){
+      setInterval(function() {
+        middleCard.src = randomizeCard();
+        console.log(selected);
+      }, 5000); 
+    //  
   }
