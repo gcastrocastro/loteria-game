@@ -132,6 +132,18 @@
   }
 
   function checkWinner() {
+    checkHorizontalWin();
+    checkVerticalWin();
+    checkDiagonalWin();
+  }
+
+  function renderMessage() {
+    const winnerMessage = document.createElement('h2');
+    winnerMessage.innerHTML =`<h4>The ${winner} has won! <br> Congratulations!</h4>`;
+    middleContainer.prepend(winnerMessage);
+  }
+
+  function checkHorizontalWin() {
     board.forEach(rowArray => {
       let sum = 0;
       rowArray.forEach(value => {
@@ -144,8 +156,29 @@
     })
   }
 
-  function renderMessage() {
-    const winnerMessage = document.createElement('h2');
-    winnerMessage.innerHTML =`<h4>The ${winner} has won! <br> Congratulations!</h4>`;
-    middleContainer.prepend(winnerMessage);
+  function checkVerticalWin() {
+    let sumColZero = 0;
+    let sumColOne = 0;
+    let sumColTwo = 0;
+    let sumColThree = 0;
+    board.forEach(rowArray => {
+       sumColZero += rowArray[0];
+       sumColOne += rowArray[1];
+       sumColTwo += rowArray[2];
+       sumColThree += rowArray[3];
+    })
+    if (sumColZero === 4 || sumColOne === 4 || sumColTwo === 4 || sumColThree === 4) {
+      winner = 'player';
+      renderMessage();
+    }
+    // console.log(sumColZero, sumColOne, sumColTwo, sumColThree);
+  }
+
+  function checkDiagonalWin() {
+    let sumBackSlash = 0;
+    let sumForwardSlash = 0;
+    for (let i=3; i >= 0; i--){
+      sumBackSlash += board[i][i];
+    }
+    console.log(sumBackSlash);
   }
