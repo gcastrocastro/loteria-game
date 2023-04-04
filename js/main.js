@@ -63,6 +63,7 @@
   /*----- state variables -----*/
   let selected;
   let board;
+  let computerBoard;
   let winner;
 
   /*----- cached elements  -----*/
@@ -81,9 +82,14 @@
   initialize();
 
   function initialize() {
-      selected = [];
       winner = null;
       board = [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+      ];
+      computerBoard = [
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
@@ -102,7 +108,8 @@
     }
   }
 
-  function randomizeBoard(){
+  function randomizeBoard(board){
+    selected = [];
     board.forEach((rowArray, arrayIdx) => {
         rowArray.forEach((rowValue, rowIdx) => {
             const cardId = `${arrayIdx},${rowIdx}`;
@@ -110,6 +117,17 @@
             cardEl.src = randomizeCard();
         })
     })
+  }
+
+  function randomizeOpponentBoard(computerBoard){
+    selected = [];
+    computerBoard.forEach((rowArray, arrayIdx) => {
+      rowArray.forEach((rowValue, rowIdx) => {
+          const opponentId = `${arrayIdx},${rowIdx},`;
+          const opponentCardEl = document.getElementById(opponentId);
+          opponentCardEl.src = randomizeCard();
+      })
+  })
   }
 
   function handleClick(e){
@@ -121,7 +139,8 @@
   }
 
   function deckCountdown(){
-    randomizeBoard();
+    randomizeBoard(board);
+    randomizeOpponentBoard(computerBoard);
     selected = [];
     //  while (selected.length <= 54){
       setInterval(function() {
@@ -171,7 +190,6 @@
       winner = 'player';
       renderMessage();
     }
-    // console.log(sumColZero, sumColOne, sumColTwo, sumColThree);
   }
 
   function checkDiagonalWin() {
