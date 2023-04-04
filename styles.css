@@ -33,6 +33,14 @@ h1 {
     grid-gap: 0;
 }
 
+#opponent-tabla {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: repeat(4, 25%);
+    grid-gap: 0;
+}
+
 #middle-container{
     display: flex;
     flex-direction: column;
@@ -69,14 +77,15 @@ h1 {
     cursor: pointer;
 }
 
-#c0r1 {
-    z-index:0;
+#opponent-tabla img {
+    height: 18vmin;
+    cursor: pointer;
 }
 
-.bean_overlay{
+/* .bean_overlay{
     position: absolute;
     background-repeat: no-repeat;
     background-position: center;
     z-index: 1;
     opacity: 1;
-}
+} */
