@@ -177,8 +177,14 @@
   function checkDiagonalWin() {
     let sumBackSlash = 0;
     let sumForwardSlash = 0;
-    for (let i=3; i >= 0; i--){
+
+    for (let i=0; i < 4; i++){
       sumBackSlash += board[i][i];
+      sumForwardSlash += board [i][3-i];
     }
-    console.log(sumBackSlash);
+
+    if (sumBackSlash === 4 || sumForwardSlash === 4 ) {
+      winner = 'player';
+      renderMessage();
+    }
   }
