@@ -83,21 +83,31 @@
   initialize();
 
   function initialize() {
-      winner = null;
-      player = [
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]
-      ];
-      computer = [
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]
-      ];
+    winner = null;
+    player = [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0]
+    ];
+    computer = [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0]
+    ];
   }
 
+  //Initiates the gameplay
+  function deckCountdown(){
+    tablaCards.forEach(card => card.addEventListener('click', handleClick));
+    randomizePlayerBoard(player);
+    randomizeOpponentBoard(computer);
+    selected = [];
+    intervalID = setInterval(changeCardsInterval, 5000);
+  }
+
+  //Randomizes the cards that show in both the player and computer tablas
   function randomizeCard() {
     const randomIndex = Math.floor(Math.random() * deck.length);
     const found = selected.find(selectedItem => selectedItem === randomIndex);
@@ -108,15 +118,15 @@
       return randomizeCard();
     }
   }
-
-  function randomizeBoard(player){
+  
+  function randomizePlayerBoard(player){
     selected = [];
     player.forEach((rowArray, arrayIdx) => {
-        rowArray.forEach((rowValue, rowIdx) => {
-            const cardId = `${arrayIdx},${rowIdx}`;
-            const cardEl = document.getElementById(cardId);
-            cardEl.src = randomizeCard();
-        })
+      rowArray.forEach((rowValue, rowIdx) => {
+        const cardId = `${arrayIdx},${rowIdx}`;
+        const cardEl = document.getElementById(cardId);
+        cardEl.src = randomizeCard();
+      })
     })
   }
 
@@ -124,13 +134,14 @@
     selected = [];
     computer.forEach((rowArray, arrayIdx) => {
       rowArray.forEach((rowValue, rowIdx) => {
-          const opponentId = `${arrayIdx},${rowIdx},`;
-          const opponentCardEl = document.getElementById(opponentId);
-          opponentCardEl.src = randomizeCard();
+        const opponentId = `${arrayIdx},${rowIdx},`;
+        const opponentCardEl = document.getElementById(opponentId);
+        opponentCardEl.src = randomizeCard();
       })
-  })
+    })
   }
 
+  //Handles the click event for the player tablas
   function handleClick(e){
     const target = e.target;
     const [col, row] = target.id.split(",");
@@ -139,14 +150,16 @@
     checkWinner();
   }
 
-  function deckCountdown(){
-    tablaCards.forEach(card => card.addEventListener('click', handleClick));
-    randomizeBoard(player);
-    randomizeOpponentBoard(computer);
-    selected = [];
-    intervalID = setInterval(changeCardsInterval, 1000);
+  //Returns array of all randomized computer cards
+  function opponentTablaImageArray() {
+    const opponentTablaImages = [];
+    opponentTablaCards.forEach(card => {
+      opponentTablaImages.push(card);
+    })
+    return opponentTablaImages;
   }
 
+  //Returns index where src of middle card equals src of any card on computer tabla
   function changeCardsInterval(){
       const opponentTablaImages = opponentTablaImageArray();
       middleCard.src = randomizeCard();
@@ -156,6 +169,7 @@
       opponentCardMatching(index);
   }
 
+  //Using index found above, the src of the matching index card is changed to the bean
   function opponentCardMatching(index){
     const changedCard = opponentTablaCards[index];
     const [col, row] = changedCard.id.split(",");
@@ -164,14 +178,7 @@
     checkWinner();
   }
 
-  function opponentTablaImageArray() {
-    const opponentTablaImages = [];
-    opponentTablaCards.forEach(card => {
-      opponentTablaImages.push(card);
-    })
-    return opponentTablaImages;
-  }
-
+  //Following functions check for all possible win logic for both player and computer
   function checkWinner() {
     checkHorizontalWin(player, "player");
     checkHorizontalWin(computer, "computer");
@@ -187,45 +194,6 @@
       createGif();
       return;
     }
-  }
-
-  function createGif(){
-    const resetBtn = document.getElementById('reset-btn');
-    const gif = document.createElement('img');
-    if (winner === "player"){
-      gif.style.width = '480';
-      gif.style.width = '270';
-      gif.src = 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2Y1NmExZjhjYjc1YWZkZTY1NzUxMTMzMTVmMjlhMDVmNjU5OGYxZSZjdD1n/a0h7sAqON67nO/giphy.gif';
-    } else if (winner === 'computer'){
-      gif.style.width = '480';
-      gif.style.width = '270';
-      gif.src = 'https://media1.giphy.com/media/5BLIUJbZfDzIPv0EpL/giphy.gif?cid=ecf05e474l76r0rmo3yrhkz19ipzxi7sy6nc9qj24hp76ktd&rid=giphy.gif&ct=g';
-    }
-    middleContainer.insertBefore(gif, resetBtn);
-  }
-
-  function createResetButton(){
-    const resetBtn = document.createElement('button');
-      middleContainer.appendChild(resetBtn);
-      resetBtn.setAttribute('id', 'reset-btn');
-      resetBtn.innerText = 'Reset the game';
-      resetBtn.addEventListener('click', resetGame);
-  }
-
-  function resetGame() {
-    initialize();
-    location.reload();
-  }
-
-  function renderMessage() {
-    const winnerMessage = document.createElement('h2');
-    console.log(winner);
-    if (winner === 'player'){
-      winnerMessage.innerHTML =`<h4>The ${winner} has won! <br> Congratulations!</h4>`;
-    } else if (winner === 'computer'){
-      winnerMessage.innerHTML =`<h4>The ${winner} has won! <br> Better luck next time!</h4>`;
-    }
-    middleContainer.prepend(winnerMessage);
   }
 
   function checkHorizontalWin(tabla, name) {
@@ -269,4 +237,43 @@
       winner = `${name}`;
       renderMessage();
     }
+  }
+
+  //Renders win or loss message
+  function renderMessage() {
+    const winnerMessage = document.createElement('h2');
+    if (winner === 'player'){
+      winnerMessage.innerHTML =`<h4>The ${winner} has won! <br> Congratulations!</h4>`;
+    } else if (winner === 'computer'){
+      winnerMessage.innerHTML =`<h4>The ${winner} has won! <br> Better luck next time!</h4>`;
+    }
+    middleContainer.prepend(winnerMessage);
+  }
+
+  function createGif(){
+    const resetBtn = document.getElementById('reset-btn');
+    const gif = document.createElement('img');
+    if (winner === "player"){
+      gif.style.width = '480';
+      gif.style.width = '270';
+      gif.src = 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2Y1NmExZjhjYjc1YWZkZTY1NzUxMTMzMTVmMjlhMDVmNjU5OGYxZSZjdD1n/a0h7sAqON67nO/giphy.gif';
+    } else if (winner === 'computer'){
+      gif.style.width = '480';
+      gif.style.width = '270';
+      gif.src = 'https://media1.giphy.com/media/5BLIUJbZfDzIPv0EpL/giphy.gif?cid=ecf05e474l76r0rmo3yrhkz19ipzxi7sy6nc9qj24hp76ktd&rid=giphy.gif&ct=g';
+    }
+    middleContainer.insertBefore(gif, resetBtn);
+  }
+
+  function createResetButton(){
+    const resetBtn = document.createElement('button');
+    middleContainer.appendChild(resetBtn);
+    resetBtn.setAttribute('id', 'reset-btn');
+    resetBtn.innerText = 'Reset the game';
+    resetBtn.addEventListener('click', resetGame);
+  }
+
+  function resetGame() {
+    initialize();
+    location.reload();
   }
