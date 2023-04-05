@@ -96,20 +96,7 @@
         [0, 0, 0, 0],
         [0, 0, 0, 0]
       ];
-      // renderStarterBoard();
   }
-
-  // function renderStarterBoard() {
-  //   player.forEach((rowArray, arrayIdx) => {
-  //     rowArray.forEach((rowValue, rowIdx) => {
-  //         const cardId = `${arrayIdx},${rowIdx}`;
-  //         const cardEl = document.getElementById(cardId);
-  //         if ([rowArray][rowValue] === 0){
-  //             cardEl.src = deck[0].image;
-  //       }
-  //     })
-  //   })  
-  // }
 
   function randomizeCard() {
     const randomIndex = Math.floor(Math.random() * deck.length);
@@ -189,7 +176,7 @@
     checkHorizontalWin(player, "player");
     checkHorizontalWin(computer, "computer");
     checkVerticalWin(player, "player");
-    checkVerticalWin(computer, "computer") // this is where I was trying to use my winning logic to do the same for the computer
+    checkVerticalWin(computer, "computer");
     checkDiagonalWin(player, "player");
     checkDiagonalWin(computer, "computer");
     if (winner === 'player' || winner === 'computer') {
@@ -204,7 +191,8 @@
   }
 
   function resetGame() {
-    console.log('yes!');
+    initialize();
+    location.reload();
   }
 
   function renderMessage() {
