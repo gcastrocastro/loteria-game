@@ -144,12 +144,11 @@
     randomizeBoard(board);
     randomizeOpponentBoard(computerBoard);
     const opponentTablaImages = opponentTablaImageArray();
-    console.log(opponentTablaImages);
     selected = [];
     //  while (selected.length <= 54){
       setInterval(function() {
         middleCard.src = randomizeCard();
-        console.log(middleCard.src);
+        // console.log(middleCard.src);
         const index = opponentTablaImages.findIndex(image => {
           return image.src === middleCard.src;
         });
@@ -159,6 +158,9 @@
   }
 
   function opponentCardMatching(index){
+    const changedCard = opponentTablaCards[index];
+    const [col, row] = changedCard.id.split(",");
+    computerBoard[col][row] = 1;
     opponentTablaCards[index].src = bean.image;
   }
 
@@ -172,7 +174,8 @@
 
   function checkWinner() {
     checkHorizontalWin();
-    checkVerticalWin();
+    checkVerticalWin(board);
+    checkVerticalWin(computerBoard) // this is where I was trying to use my winning logic to do the same for the computer
     checkDiagonalWin();
   }
 
