@@ -77,8 +77,6 @@
   const opponentTablaCards = [...nodeListOpponent];
 
   /*----- event listeners -----*/
-   tablaCards.forEach(card => card.addEventListener('click', handleClick));
-  //  opponentTablaCards.forEach(card => card.addEventListener('click', handleClick));
    playBtn.addEventListener('click', deckCountdown);
 
   /*----- functions -----*/
@@ -142,10 +140,11 @@
   }
 
   function deckCountdown(){
+    tablaCards.forEach(card => card.addEventListener('click', handleClick));
     randomizeBoard(player);
     randomizeOpponentBoard(computer);
     selected = [];
-    intervalID = setInterval(changeCardsInterval, 1000);
+    intervalID = setInterval(changeCardsInterval, 5000);
   }
 
   function changeCardsInterval(){
