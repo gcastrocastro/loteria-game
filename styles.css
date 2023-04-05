@@ -50,7 +50,7 @@ h1 {
 
 #random-card{
     height: 40vmin;
-    width: 30vmin;
+    border: 1vmin dotted white;
 }
 
 #play-btn, 
