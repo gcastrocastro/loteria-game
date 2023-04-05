@@ -180,14 +180,36 @@
     checkDiagonalWin(player, "player");
     checkDiagonalWin(computer, "computer");
     if (winner === 'player' || winner === 'computer') {
+      middleCard.remove();
+      playBtn.remove();
       clearInterval(intervalID);
-      const resetBtn = document.createElement('button');
+      createResetButton();
+      createGif();
+      return;
+    }
+  }
+
+  function createGif(){
+    const resetBtn = document.getElementById('reset-btn');
+    const gif = document.createElement('img');
+    if (winner === "player"){
+      gif.style.width = '480';
+      gif.style.width = '270';
+      gif.src = 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2Y1NmExZjhjYjc1YWZkZTY1NzUxMTMzMTVmMjlhMDVmNjU5OGYxZSZjdD1n/a0h7sAqON67nO/giphy.gif';
+    } else if (winner === 'computer'){
+      gif.style.width = '480';
+      gif.style.width = '270';
+      gif.src = 'https://media1.giphy.com/media/5BLIUJbZfDzIPv0EpL/giphy.gif?cid=ecf05e474l76r0rmo3yrhkz19ipzxi7sy6nc9qj24hp76ktd&rid=giphy.gif&ct=g';
+    }
+    middleContainer.insertBefore(gif, resetBtn);
+  }
+
+  function createResetButton(){
+    const resetBtn = document.createElement('button');
       middleContainer.appendChild(resetBtn);
       resetBtn.setAttribute('id', 'reset-btn');
       resetBtn.innerText = 'Reset the game';
       resetBtn.addEventListener('click', resetGame);
-      return;
-    }
   }
 
   function resetGame() {
