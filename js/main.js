@@ -250,6 +250,7 @@
     middleContainer.prepend(winnerMessage);
   }
 
+  // Creates gif img element for win or loss message
   function createGif(){
     const resetBtn = document.getElementById('reset-btn');
     const gif = document.createElement('img');
