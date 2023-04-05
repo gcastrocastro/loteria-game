@@ -62,9 +62,10 @@
 
   /*----- state variables -----*/
   let selected;
-  let board;
-  let computerBoard;
+  let player;
+  let computer;
   let winner;
+  let intervalID;
 
   /*----- cached elements  -----*/
   const middleCard = document.getElementById('random-card');
@@ -85,13 +86,13 @@
 
   function initialize() {
       winner = null;
-      board = [
+      player = [
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0]
       ];
-      computerBoard = [
+      computer = [
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
@@ -110,9 +111,9 @@
     }
   }
 
-  function randomizeBoard(board){
+  function randomizeBoard(player){
     selected = [];
-    board.forEach((rowArray, arrayIdx) => {
+    player.forEach((rowArray, arrayIdx) => {
         rowArray.forEach((rowValue, rowIdx) => {
             const cardId = `${arrayIdx},${rowIdx}`;
             const cardEl = document.getElementById(cardId);
@@ -121,9 +122,9 @@
     })
   }
 
-  function randomizeOpponentBoard(computerBoard){
+  function randomizeOpponentBoard(computer){
     selected = [];
-    computerBoard.forEach((rowArray, arrayIdx) => {
+    computer.forEach((rowArray, arrayIdx) => {
       rowArray.forEach((rowValue, rowIdx) => {
           const opponentId = `${arrayIdx},${rowIdx},`;
           const opponentCardEl = document.getElementById(opponentId);
@@ -135,33 +136,33 @@
   function handleClick(e){
     const target = e.target;
     const [col, row] = target.id.split(",");
-    board[col][row] = 1;
+    player[col][row] = 1;
     target.src = bean.image;
     checkWinner();
   }
 
   function deckCountdown(){
-    randomizeBoard(board);
-    randomizeOpponentBoard(computerBoard);
-    const opponentTablaImages = opponentTablaImageArray();
+    randomizeBoard(player);
+    randomizeOpponentBoard(computer);
     selected = [];
-    //  while (selected.length <= 54){
-      setInterval(function() {
-        middleCard.src = randomizeCard();
-        // console.log(middleCard.src);
-        const index = opponentTablaImages.findIndex(image => {
-          return image.src === middleCard.src;
-        });
-        opponentCardMatching(index);
-      }, 5000); 
-    //  
+    intervalID = setInterval(changeCardsInterval, 1000);
+  }
+
+  function changeCardsInterval(){
+      const opponentTablaImages = opponentTablaImageArray();
+      middleCard.src = randomizeCard();
+      const index = opponentTablaImages.findIndex(image => {
+        return image.src === middleCard.src;
+      });
+      opponentCardMatching(index);
   }
 
   function opponentCardMatching(index){
     const changedCard = opponentTablaCards[index];
     const [col, row] = changedCard.id.split(",");
-    computerBoard[col][row] = 1;
+    computer[col][row] = 1;
     opponentTablaCards[index].src = bean.image;
+    checkWinner();
   }
 
   function opponentTablaImageArray() {
@@ -173,10 +174,16 @@
   }
 
   function checkWinner() {
-    checkHorizontalWin();
-    checkVerticalWin(board);
-    checkVerticalWin(computerBoard) // this is where I was trying to use my winning logic to do the same for the computer
-    checkDiagonalWin();
+    checkHorizontalWin(player, "player");
+    checkHorizontalWin(computer, "computer");
+    checkVerticalWin(player, "player");
+    checkVerticalWin(computer, "computer") // this is where I was trying to use my winning logic to do the same for the computer
+    checkDiagonalWin(player, "player");
+    checkDiagonalWin(computer, "computer");
+    if (winner === 'player' || winner === 'computer') {
+      clearInterval(intervalID);
+      return;
+    }
   }
 
   function renderMessage() {
@@ -185,47 +192,45 @@
     middleContainer.prepend(winnerMessage);
   }
 
-  function checkHorizontalWin() {
-    board.forEach(rowArray => {
+  function checkHorizontalWin(tabla, name) {
+    tabla.forEach(rowArray => {
       let sum = 0;
       rowArray.forEach(value => {
         sum += value;
       })
       if (sum === 4) {
-        winner = 'player';
+        winner = `${name}`;
         renderMessage();
       }
     })
   }
 
-  function checkVerticalWin() {
+  function checkVerticalWin(tabla, name) {
     let sumColZero = 0;
     let sumColOne = 0;
     let sumColTwo = 0;
     let sumColThree = 0;
-    board.forEach(rowArray => {
+    tabla.forEach(rowArray => {
        sumColZero += rowArray[0];
        sumColOne += rowArray[1];
        sumColTwo += rowArray[2];
        sumColThree += rowArray[3];
     })
     if (sumColZero === 4 || sumColOne === 4 || sumColTwo === 4 || sumColThree === 4) {
-      winner = 'player';
+      winner = `${name}`;
       renderMessage();
     }
   }
 
-  function checkDiagonalWin() {
+  function checkDiagonalWin(tabla, name) {
     let sumBackSlash = 0;
     let sumForwardSlash = 0;
-
     for (let i=0; i < 4; i++){
-      sumBackSlash += board[i][i];
-      sumForwardSlash += board [i][3-i];
+      sumBackSlash += tabla[i][i];
+      sumForwardSlash += tabla[i][3-i];
     }
-
     if (sumBackSlash === 4 || sumForwardSlash === 4 ) {
-      winner = 'player';
+      winner = `${name}`;
       renderMessage();
     }
   }
