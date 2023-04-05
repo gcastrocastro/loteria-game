@@ -17,6 +17,7 @@ h1 {
     color: white;
     font-family: 'New Tegomin', serif;
     margin-top: 10px;
+    margin-bottom: 0px;
 }
 
 #gameboards {
@@ -82,10 +83,8 @@ h1 {
     cursor: pointer;
 }
 
-/* .bean_overlay{
-    position: absolute;
-    background-repeat: no-repeat;
-    background-position: center;
-    z-index: 1;
-    opacity: 1;
-} */
+h3 {
+    font-family: 'New Tegomin', serif;
+    color: white;
+    font-size: 3vmin;
+}
