@@ -72,13 +72,15 @@
   const playBtn = document.getElementById('reset-btn');
   const nodeList = document.querySelectorAll('#tabla > img');
   const tablaCards = [...nodeList];
+  const nodeListOpponent = document.querySelectorAll('#opponent-tabla > img');
+  const opponentTablaCards = [...nodeListOpponent];
 
   /*----- event listeners -----*/
    tablaCards.forEach(card => card.addEventListener('click', handleClick));
+  //  opponentTablaCards.forEach(card => card.addEventListener('click', handleClick));
    playBtn.addEventListener('click', deckCountdown);
 
   /*----- functions -----*/
-
   initialize();
 
   function initialize() {
@@ -141,13 +143,31 @@
   function deckCountdown(){
     randomizeBoard(board);
     randomizeOpponentBoard(computerBoard);
+    const opponentTablaImages = opponentTablaImageArray();
+    console.log(opponentTablaImages);
     selected = [];
     //  while (selected.length <= 54){
       setInterval(function() {
         middleCard.src = randomizeCard();
-        console.log(selected);
+        console.log(middleCard.src);
+        const index = opponentTablaImages.findIndex(image => {
+          return image.src === middleCard.src;
+        });
+        opponentCardMatching(index);
       }, 5000); 
     //  
+  }
+
+  function opponentCardMatching(index){
+    opponentTablaCards[index].src = bean.image;
+  }
+
+  function opponentTablaImageArray() {
+    const opponentTablaImages = [];
+    opponentTablaCards.forEach(card => {
+      opponentTablaImages.push(card);
+    })
+    return opponentTablaImages;
   }
 
   function checkWinner() {
