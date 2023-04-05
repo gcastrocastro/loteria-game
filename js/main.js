@@ -61,23 +61,23 @@
   }
 
   /*----- state variables -----*/
-  let selected;
   let player;
   let computer;
   let winner;
+  let selected;
   let intervalID;
 
   /*----- cached elements  -----*/
   const middleCard = document.getElementById('random-card');
   const middleContainer = document.getElementById('middle-container');
-  const playBtn = document.getElementById('reset-btn');
+  const playBtn = document.getElementById('play-btn');
   const nodeList = document.querySelectorAll('#tabla > img');
   const tablaCards = [...nodeList];
   const nodeListOpponent = document.querySelectorAll('#opponent-tabla > img');
   const opponentTablaCards = [...nodeListOpponent];
 
   /*----- event listeners -----*/
-   playBtn.addEventListener('click', deckCountdown);
+  playBtn.addEventListener('click', deckCountdown);
 
   /*----- functions -----*/
   initialize();
@@ -96,7 +96,20 @@
         [0, 0, 0, 0],
         [0, 0, 0, 0]
       ];
+      // renderStarterBoard();
   }
+
+  // function renderStarterBoard() {
+  //   player.forEach((rowArray, arrayIdx) => {
+  //     rowArray.forEach((rowValue, rowIdx) => {
+  //         const cardId = `${arrayIdx},${rowIdx}`;
+  //         const cardEl = document.getElementById(cardId);
+  //         if ([rowArray][rowValue] === 0){
+  //             cardEl.src = deck[0].image;
+  //       }
+  //     })
+  //   })  
+  // }
 
   function randomizeCard() {
     const randomIndex = Math.floor(Math.random() * deck.length);
@@ -144,7 +157,7 @@
     randomizeBoard(player);
     randomizeOpponentBoard(computer);
     selected = [];
-    intervalID = setInterval(changeCardsInterval, 5000);
+    intervalID = setInterval(changeCardsInterval, 1000);
   }
 
   function changeCardsInterval(){
@@ -181,13 +194,27 @@
     checkDiagonalWin(computer, "computer");
     if (winner === 'player' || winner === 'computer') {
       clearInterval(intervalID);
+      const resetBtn = document.createElement('button');
+      middleContainer.appendChild(resetBtn);
+      resetBtn.setAttribute('id', 'reset-btn');
+      resetBtn.innerText = 'Reset the game';
+      resetBtn.addEventListener('click', resetGame);
       return;
     }
   }
 
+  function resetGame() {
+    console.log('yes!');
+  }
+
   function renderMessage() {
     const winnerMessage = document.createElement('h2');
-    winnerMessage.innerHTML =`<h4>The ${winner} has won! <br> Congratulations!</h4>`;
+    console.log(winner);
+    if (winner === 'player'){
+      winnerMessage.innerHTML =`<h4>The ${winner} has won! <br> Congratulations!</h4>`;
+    } else if (winner === 'computer'){
+      winnerMessage.innerHTML =`<h4>The ${winner} has won! <br> Better luck next time!</h4>`;
+    }
     middleContainer.prepend(winnerMessage);
   }
 
