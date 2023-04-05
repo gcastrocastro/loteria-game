@@ -53,20 +53,26 @@ h1 {
     width: 30vmin;
 }
 
+#play-btn, 
 #reset-btn{
     background-color: transparent;
     color: rgba(249,73,73,1);
     border: 1px solid rgba(249,73,73,1);
-    margin-top: 50px;
+    margin-top: 6vmin;
     border-radius: 4vmin;
-    font-size: 20px;
+    font-size: 3vmin;
     font-family: 'Ultra';
     padding: 2vmin 6vmin 2vmin 6vmin;
     cursor: pointer;
     transform: scale(.8);
 }
 
-#reset-btn:hover{
+#reset-btn {
+    margin-top: 1vmin;
+}
+
+#play-btn:hover,
+#reset-btn:hover {
     background-color: rgba(249,73,73,1);
     color: rgb(242,235,91);
     transform: scale(.9);
@@ -84,6 +90,12 @@ h1 {
 }
 
 h3 {
+    font-family: 'New Tegomin', serif;
+    color: white;
+    font-size: 3vmin;
+}
+
+h4 {
     font-family: 'New Tegomin', serif;
     color: white;
     font-size: 3vmin;
