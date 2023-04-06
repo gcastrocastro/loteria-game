@@ -191,7 +191,7 @@
       middleCard.remove();
       clearInterval(intervalID);
       createResetButton();
-      createGif();
+      // createGif();
       return;
     }
   }
