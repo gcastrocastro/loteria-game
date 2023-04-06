@@ -51,6 +51,7 @@ h1 {
 }
 
 #random-card{
+    border-radius: 10%;
     cursor: pointer;
     height: 40vmin;
     border: 1vmin dotted;
@@ -58,6 +59,7 @@ h1 {
 }
 
 #instructions {
+    border-radius: 10%;
     background-color: transparent;
     max-width: 350px;
     border: 1vmin dotted;
@@ -74,7 +76,6 @@ h1 {
     background-color: transparent;
     color: rgba(249,73,73,1);
     border: 1px solid rgba(249,73,73,1);
-    margin-top: 6vmin;
     border-radius: 4vmin;
     font-size: 3vmin;
     font-family: 'Ultra';
