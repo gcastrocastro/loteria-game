@@ -105,6 +105,7 @@
     randomizeOpponentBoard(computer);
     selected = [];
     intervalID = setInterval(changeCardsInterval, 5000);
+    playBtn.remove();
   }
 
   //Randomizes the cards that show in both the player and computer tablas
@@ -188,7 +189,6 @@
     checkDiagonalWin(computer, "computer");
     if (winner === 'player' || winner === 'computer') {
       middleCard.remove();
-      playBtn.remove();
       clearInterval(intervalID);
       createResetButton();
       createGif();
