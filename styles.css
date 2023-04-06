@@ -14,14 +14,6 @@ body {
     border-color: white;
 }
 
-h1 {
-    font-size: 8vmin;
-    color: white;
-    font-family: 'New Tegomin', serif;
-    margin-top: 10px;
-    margin-bottom: 0px;
-}
-
 #gameboards {
     display: flex;
     justify-content: space-evenly;
@@ -104,6 +96,19 @@ h1 {
 #opponent-tabla img {
     height: 18vmin;
     cursor: pointer;
+}
+
+h1 {
+    font-size: 8vmin;
+    color: white;
+    font-family: 'New Tegomin', serif;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+h2 {
+    font-family: 'New Tegomin', serif;
+    color: white;
 }
 
 h3 {
