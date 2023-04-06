@@ -10,6 +10,8 @@ body {
     text-align: center;
     background: rgb(242,235,91);
     background: radial-gradient(circle, rgba(242,235,91,1) 0%, rgba(249,73,73,1) 100%);
+    border: 1vmin dotted;
+    border-color: white;
 }
 
 h1 {
@@ -49,8 +51,22 @@ h1 {
 }
 
 #random-card{
+    cursor: pointer;
     height: 40vmin;
-    border: 1vmin dotted white;
+    border: 1vmin dotted;
+    border-color: white;
+}
+
+#instructions {
+    background-color: transparent;
+    max-width: 350px;
+    border: 1vmin dotted;
+    border-color: white;
+    padding: 10px;
+}
+
+#instructions h4{
+    margin: 0;
 }
 
 #play-btn, 
