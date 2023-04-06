@@ -80,6 +80,7 @@
   /*----- event listeners -----*/
   playBtn.addEventListener('click', deckCountdown);
   middleCard.addEventListener('click', giveInstructions);
+
   /*----- functions -----*/
   initialize();
 
@@ -120,6 +121,7 @@
     randomizePlayerBoard(player);
     randomizeOpponentBoard(computer);
     createResetButton();
+    selected = [];
     intervalID = setInterval(changeCardsInterval, 5000);
     playBtn.remove();
   }
@@ -180,12 +182,12 @@
 
   //Returns index where src of middle card equals src of any card on computer tabla
   function changeCardsInterval(){
-      const opponentTablaImages = opponentTablaImageArray();
-      middleCard.src = randomizeCard();
-      const index = opponentTablaImages.findIndex(image => {
-        return image.src === middleCard.src;
-      });
-      opponentCardMatching(index);
+    const opponentTablaImages = opponentTablaImageArray();
+    middleCard.src = randomizeCard();
+    const index = opponentTablaImages.findIndex(image => {
+      return image.src === middleCard.src;
+    });
+    opponentCardMatching(index);
   }
 
   //Using index found above, the src of the matching index card is changed to the bean
@@ -207,6 +209,7 @@
     checkDiagonalWin(computer, "computer");
     if (winner === 'player' || winner === 'computer') {
       middleCard.remove();
+      renderMessage();
       clearInterval(intervalID);
       createGif();
       return;
@@ -221,7 +224,6 @@
       })
       if (sum === 4) {
         winner = `${name}`;
-        renderMessage();
       }
     })
   }
@@ -239,7 +241,6 @@
     })
     if (sumColZero === 4 || sumColOne === 4 || sumColTwo === 4 || sumColThree === 4) {
       winner = `${name}`;
-      renderMessage();
     }
   }
 
@@ -252,7 +253,6 @@
     }
     if (sumBackSlash === 4 || sumForwardSlash === 4 ) {
       winner = `${name}`;
-      renderMessage();
     }
   }
 
@@ -260,9 +260,9 @@
   function renderMessage() {
     const winnerMessage = document.createElement('h2');
     if (winner === 'player'){
-      winnerMessage.innerHTML =`<h4>The ${winner} has won! <br> Congratulations!</h4>`;
+      winnerMessage.innerText =`The ${winner} has won! Congratulations!`;
     } else if (winner === 'computer'){
-      winnerMessage.innerHTML =`<h4>The ${winner} has won! </h4>`;
+      winnerMessage.innerText =`The ${winner} has won!`;
     }
     middleContainer.prepend(winnerMessage);
   }
