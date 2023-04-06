@@ -71,6 +71,7 @@
   const middleCard = document.getElementById('random-card');
   const middleContainer = document.getElementById('middle-container');
   const playBtn = document.getElementById('play-btn');
+  const clickMssg = document.getElementById('click-mssg');
   const nodeList = document.querySelectorAll('#tabla > img');
   const tablaCards = [...nodeList];
   const nodeListOpponent = document.querySelectorAll('#opponent-tabla > img');
@@ -78,11 +79,12 @@
 
   /*----- event listeners -----*/
   playBtn.addEventListener('click', deckCountdown);
-
+  middleCard.addEventListener('click', giveInstructions);
   /*----- functions -----*/
   initialize();
 
   function initialize() {
+    selected = [];
     winner = null;
     player = [
       [0, 0, 0, 0],
@@ -98,8 +100,18 @@
     ];
   }
 
+  function giveInstructions() {
+    const instructionBlock = document.createElement('div');
+    instructionBlock.setAttribute('id', 'instructions');
+    instructionBlock.innerHTML = "<h4>Ready to have some fun a-la-Mexicana?</h4><br><h4>You will have 5 seconds to identify each card on your tabla.<br> Win by placing 4 beans horizontally, vertically or diagonally before the computer does.</h4>";
+    middleCard.replaceWith(instructionBlock);
+  }
+
   //Initiates the gameplay
   function deckCountdown(){
+    clickMssg.remove();
+    const instructionBlock = document.getElementById('instructions');
+    instructionBlock.replaceWith(middleCard);
     tablaCards.forEach(card => card.addEventListener('click', handleClick));
     randomizePlayerBoard(player);
     randomizeOpponentBoard(computer);
@@ -145,10 +157,14 @@
   //Handles the click event for the player tablas
   function handleClick(e){
     const target = e.target;
+    if (e.target.src === middleCard.src){
     const [col, row] = target.id.split(",");
     player[col][row] = 1;
     target.src = bean.image;
     checkWinner();
+    } else {
+      console.log('nope, not the same!');
+    }
   }
 
   //Returns array of all randomized computer cards
@@ -275,6 +291,5 @@
   }
 
   function resetGame() {
-    initialize();
     location.reload();
   }
