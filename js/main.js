@@ -110,6 +110,7 @@
 
   //Initiates the gameplay
   function deckCountdown(){
+    clickMssg.remove();
     const instructionBlock = document.getElementById('instructions');
     if (instructionBlock){
       instructionBlock.replaceWith(middleCard);
@@ -119,7 +120,6 @@
     randomizePlayerBoard(player);
     randomizeOpponentBoard(computer);
     createResetButton();
-    selected = [];
     intervalID = setInterval(changeCardsInterval, 5000);
     playBtn.remove();
   }
@@ -262,7 +262,7 @@
     if (winner === 'player'){
       winnerMessage.innerHTML =`<h4>The ${winner} has won! <br> Congratulations!</h4>`;
     } else if (winner === 'computer'){
-      winnerMessage.innerHTML =`<h4>The ${winner} has won! <br> Better luck next time!</h4>`;
+      winnerMessage.innerHTML =`<h4>The ${winner} has won! </h4>`;
     }
     middleContainer.prepend(winnerMessage);
   }
