@@ -101,20 +101,24 @@
   }
 
   function giveInstructions() {
+    clickMssg.remove();
     const instructionBlock = document.createElement('div');
     instructionBlock.setAttribute('id', 'instructions');
-    instructionBlock.innerHTML = "<h4>Ready to have some fun a-la-Mexicana?</h4><br><h4>You will have 5 seconds to identify each card on your tabla.<br> Win by placing 4 beans horizontally, vertically or diagonally before the computer does.</h4>";
+    instructionBlock.innerHTML = "<h4>Ready to have some fun<br> a-la-Mexicana?</h4><br><h4>You will have 5 seconds to identify each card on your tabla.<br> Win by placing 4 beans horizontally, vertically or diagonally before the computer does.</h4>";
     middleCard.replaceWith(instructionBlock);
   }
 
   //Initiates the gameplay
   function deckCountdown(){
-    clickMssg.remove();
     const instructionBlock = document.getElementById('instructions');
-    instructionBlock.replaceWith(middleCard);
+    if (instructionBlock){
+      instructionBlock.replaceWith(middleCard);
+    }
+    middleCard.removeEventListener('click', giveInstructions);
     tablaCards.forEach(card => card.addEventListener('click', handleClick));
     randomizePlayerBoard(player);
     randomizeOpponentBoard(computer);
+    createResetButton();
     selected = [];
     intervalID = setInterval(changeCardsInterval, 5000);
     playBtn.remove();
@@ -162,8 +166,6 @@
     player[col][row] = 1;
     target.src = bean.image;
     checkWinner();
-    } else {
-      console.log('nope, not the same!');
     }
   }
 
@@ -206,7 +208,6 @@
     if (winner === 'player' || winner === 'computer') {
       middleCard.remove();
       clearInterval(intervalID);
-      createResetButton();
       createGif();
       return;
     }
