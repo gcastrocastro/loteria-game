@@ -208,9 +208,9 @@
     checkDiagonalWin(player, "player");
     checkDiagonalWin(computer, "computer");
     if (winner === 'player' || winner === 'computer') {
+      clearInterval(intervalID);
       middleCard.remove();
       renderMessage();
-      clearInterval(intervalID);
       createGif();
       return;
     }
